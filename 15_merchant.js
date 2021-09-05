@@ -202,18 +202,13 @@ function buyFromPonty() {
                 game_log("Price: " + item.price);
                 return true;
             }
-            // Buy from the combine/upgrade lists when needed
-            let craftingNeeds = combineTargets.concat(upgradeTargets);
-            for (let it of craftingNeeds) {
+            // Buy from sniped items
+            for (let it of snipePonty) {
                 if (it !== item.name) continue;
-                // If we have enough of the item continue
-                let needed = 2;
-                if (G.items[it].compound) needed = 4;
-                if (totalInBank(it) >= needed) continue;
                 parent.socket.emit("sbuy", { "rid": item.rid });
                 set_message('BuyingPonty');
                 buyCooldown = Date.now();
-                game_log("Item Bought: " + item.name);
+                game_log("Item Bought: " + it.name);
                 game_log("From: Ponty");
                 game_log("Price: " + item.price);
                 return true;

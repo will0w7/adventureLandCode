@@ -1,12 +1,12 @@
 let pveCharacters = [
-    {'name': 'Nasca', 'class': 'warrior', 'slot': 12, 'role': 'tank'},
-    {'name': 'Nostor', 'class': 'mage', 'slot': 13, 'role': 'dps'},
-    {'name': 'ElQueCura', 'class': 'priest', 'slot': 10, 'role': 'healer'},
+    { 'name': 'Nasca', 'class': 'warrior', 'slot': 12, 'role': 'tank' },
+    { 'name': 'Nostor', 'class': 'mage', 'slot': 13, 'role': 'dps' },
+    { 'name': 'ElQueCura', 'class': 'priest', 'slot': 10, 'role': 'healer' },
     //{'name': 'Shibgank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
     //{'name': 'Shibdank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
     //{'name': 'Shibfrank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
     //{'name': 'Nullable', 'class': 'ranger', 'slot': 11, 'role': 'dps'},
-    {'name': 'ElDelBar', 'class': 'merchant', 'slot': 15, 'role': 'merchant'}
+    { 'name': 'ElDelBar', 'class': 'merchant', 'slot': 15, 'role': 'merchant' }
 ];
 
 let pvpMode = false;
@@ -52,20 +52,42 @@ let combineTargets = ['intearring', 'dexearring', 'strearring', 'molesteeth', 's
     'solitaire', 'dexamulet', 'amuletofm', 'tristone', 'xptome', 'stramulet', 'lostearring', 'wbook1', 'wbook0', 'strbelt', 'dexbelt', 'intbelt'];
 
 // The merchant will attempt to upgrade these
-let upgradeTargets = ['quiver', 'shield', 'bow', 'helmet', 'shoes', 'gloves', 'pants', 'coat', 'blade', 'claw', 'staff', 'wshield',
-    'helmet1', 'shoes1', 'gloves1', 'pants1', 'coat1', 't2bow', 'cupid', 'pmace', 'firestaff', 'harbringer', 'basher', 'fireblade', 'spear', 'throwingstars'];
+let upgradeTargets = ['xmace', '', '', '', '', '', '', '', '', '', '', '',
+    '', '', '', '', '', '', 'cupid', 'pmace', 'firestaff', 'harbringer', 'basher', 'fireblade', '', ''];
 
 // The merchant will attempt to exchange these
-let exchangeItems = [{item: 'redenvelopev2', npc: 'exchange'}, {item: 'candypop', npc: 'exchange', amount: 10},
-    {item: 'armorbox', npc: 'exchange'}, {item: 'weaponbox', npc: 'exchange'}, {item: 'gem0', npc: 'exchange'},
-    {item: 'seashell', npc: 'fisherman', amount: 20}, {item: 'candycane', npc: 'exchange'}, {
-        item: 'candycane',
-        npc: 'leathermerchant',
-        amount: 40
-    }];
+let exchangeItems = [{ item: 'redenvelopev2', npc: 'exchange' }, { item: 'candypop', npc: 'exchange', amount: 10 },
+{ item: 'armorbox', npc: 'exchange' }, { item: 'weaponbox', npc: 'exchange' }, { item: 'gem0', npc: 'exchange' },
+{ item: 'seashell', npc: 'fisherman', amount: 20 }, { item: 'candycane', npc: 'exchange' }, {
+    item: 'candycane',
+    npc: 'leathermerchant',
+    amount: 40
+}];
 
 // The merchant will attempt to sell these to NPC
-let trashItems = ['hpbelt', 'hpamulet', 'vitscroll', 'vitearring'];
+let trashItems = [
+	"cclaw", "crabclaw", "shoes1", "coat", "spores", "coat1", "pants1",
+	"wshoes", "beewings", "wcap", "strearring", "stramulet",
+	"wattire", "poison", "rattail", "wbreeches", "gslime",
+	"shoes", "pants", "spear", "sstinger", "smush", "frogt",
+	"gloves", "gloves1", "stinger", "wgloves", "sword",
+	"dstones", "helmet", "helmet1", "bwing", "tshirt0",
+	"tshirt1", "tshirt2", "cshell", "whiteegg", "",
+	"hbow", "shield", "mushroomstaff", "", "",
+	"", "", "hpbelt", "hpamulet",
+	"throwingstars", "smoke", "phelmet", "",
+	"", "dagger", "", "snowball",
+	"iceskates", "",
+	"bcandle", "ijx", "", "slimestaff", "bow", "", "",
+	//XMas Set
+	"xmashat", "mittens", "xmaspants", "xmasshoes", "rednose", "warmscarf", "", "ornamentstaff",
+	//Easter Set
+	"eears", "ecape", "epyjamas", "eslippers", "carrotsword", "pinkie",
+	//Unneeded elixirs
+	"", "", "",
+	"", "", "", "", "", "", "", "",
+	//Literally trash
+	"carrot"];
 
 // Don't sell these
 let noSell = ['stand0', 'stand1', 'cdragon', 'poison', "tracker", "jacko", "monstertoken", "pvptoken", "pickaxe", "rod"];
@@ -73,8 +95,25 @@ let noSell = ['stand0', 'stand1', 'cdragon', 'poison', "tracker", "jacko", "mons
 // Passively sell these
 let sellList = ['', '', '', '', '', '', 'firecrackers'];
 
+// Ponty snipe
+let snipePonty = [
+    // Weapons
+    "firestaff", "harbringer", "basher", "fireblade", "cupid", "pmace",
+    "staffofthedead", "swordofthedead", "maceofthedead",
+    // Jewelry
+    "intbelt", "intring", "intearring", "intamulet",
+    "strbelt", "strring", "strearring", "stramulet",
+    "orbofdex", "orbofint", "orbg",
+    // Armors
+    "mchat", "mcgloves", "mcpants", "mcarmor", "mcboots",
+    "mmhat", "mmgloves", "mmpants", "mmarmor", "mmshoes",
+    "mphat", "mpgloves", "mppants", "mparmor", "mpshoes",
+    "mphat", "mpgloves", "mppants", "mparmor", "mpshoes",
+    "mrnhat", "mrngloves", "mrnpants", "mrnarmor", "mrnboots",
+];
+
 // Passively buy these
-let buyTargets = [{item: 'poison', amount: 20}, {item: 'armorbox', amount: 1}, {item: 'weaponbox', amount: 1}];
+let buyTargets = [{ item: 'poison', amount: 20 }, { item: 'armorbox', amount: 1 }, { item: 'weaponbox', amount: 1 }];
 
 //GEARSCORE
 // These items are not equipped
@@ -223,16 +262,16 @@ let states = {
 };
 
 let patrolRoutes = {
-    main: [{x: -20.5, y: 185}, {x: -16.5, y: 781}, {x: 775.5, y: 1260}, {x: 1246, y: 363.5}, {
+    main: [{ x: -20.5, y: 185 }, { x: -16.5, y: 781 }, { x: 775.5, y: 1260 }, { x: 1246, y: 363.5 }, {
         x: 378,
         y: 1711
-    }, {x: -1011.5, y: 1724}, {x: -1119.5, y: 96}],
-    winterland: [{x: 3, y: -6}, {x: 1198, y: 59}, {x: -20.5, y: 185}, {x: 1089, y: -922}, {x: 47, y: -2050}, {
+    }, { x: -1011.5, y: 1724 }, { x: -1119.5, y: 96 }],
+    winterland: [{ x: 3, y: -6 }, { x: 1198, y: 59 }, { x: -20.5, y: 185 }, { x: 1089, y: -922 }, { x: 47, y: -2050 }, {
         x: 465,
         y: -2550
     }],
-    halloween: [{x: 21, y: -195}, {x: -83, y: -1480}, {x: -470, y: -378}, {x: -242.5, y: 730}],
-    desertland: [{x: -761, y: -157}, {x: -1072, y: -1444}, {x: 421, y: -1464}],
-    spookytown: [{x: 4.5, y: 16}, {x: -623, y: -768},],
-    cave: [{x: 10.5, y: -182}, {x: 1036, y: 75}, {x: 1154, y: -766}, {x: 128, y: -1162}]
+    halloween: [{ x: 21, y: -195 }, { x: -83, y: -1480 }, { x: -470, y: -378 }, { x: -242.5, y: 730 }],
+    desertland: [{ x: -761, y: -157 }, { x: -1072, y: -1444 }, { x: 421, y: -1464 }],
+    spookytown: [{ x: 4.5, y: 16 }, { x: -623, y: -768 },],
+    cave: [{ x: 10.5, y: -182 }, { x: 1036, y: 75 }, { x: 1154, y: -766 }, { x: 128, y: -1162 }]
 };

@@ -40,8 +40,9 @@ function merchantTaskManager() {
         combineItems();
     } else {
         if (!getItem && !craftingItem && !exchangeTarget && !currentTask) if (character.map === 'bank') return shibMove('main'); else if (!distanceToPoint(69, 12) || distanceToPoint(69, 12) > 15) return shibMove(69, 12);
-        if (!sellItemsToPlayers() && !buyFromPlayers() && !buyFromPonty()) {
+        if (!sellItemsToPlayers() && buyFromPlayers() && !buyFromPonty()) {
             // buyBaseItems();
+            buyCheapStuff();
             passiveMerchant();
         }
     }
@@ -203,6 +204,52 @@ function buyFromPonty() {
         }
     }
     return false;
+}
+
+function buyCheapStuff() {
+	for (const i in parent.entities) {
+		const otherPlayer = parent.entities[i];
+		if (otherPlayer.player
+			&& otherPlayer.ctype === "merchant"
+			&& otherPlayer.slots
+			//&& distance(character, otherPlayer) < G.skills.mluck.range
+			) {
+
+			const tradeSlots = Object.keys(otherPlayer.slots).filter(tradeSlot => tradeSlot.includes("trade"));
+			tradeSlots.forEach(tradeSlot => {
+				const otherPlayerTradeSlot = otherPlayer.slots[tradeSlot];
+				//Must be a Trade-Slot
+				if (otherPlayerTradeSlot) {
+					if (!otherPlayerTradeSlot.b //Excludes "whishlisted" items! Trade slots can "sell" or "wishlist"!
+						&& otherPlayerTradeSlot.price < item_value(otherPlayerTradeSlot)
+						&& character.gold > otherPlayerTradeSlot.price
+						//Don't try to buy Giveaways
+						&& !otherPlayerTradeSlot.giveaway) {
+						//If it's a single item, buy it.
+						if (!otherPlayerTradeSlot.q) {
+							game_log(`Bought 1 ${otherPlayerTradeSlot.name} from ${otherPlayer.name}`);
+							trade_buy(otherPlayer, tradeSlot, 1);
+							//If the item has a quantity, buy as many as possible
+						} else if (otherPlayerTradeSlot.q) {
+							//Maximum possible quantity of items that can be bought wit available gold
+							let maxBuy = Math.floor(character.gold / otherPlayerTradeSlot.price) < otherPlayerTradeSlot.q ? Math.floor(character.gold / otherPlayerTradeSlot.price) : otherPlayerTradeSlot.q;
+							trade_buy(otherPlayer, tradeSlot, maxBuy);
+							//parent.trade_buy(tradeSlot, otherPlayer.name, otherPlayerTradeSlot.rid, maxBuy);
+						}
+						//Auto-Join Giveaways
+					} else if (otherPlayerTradeSlot.giveaway
+						&& !otherPlayerTradeSlot.list.includes(character.name)) {
+						parent.socket.emit('join_giveaway', {
+							slot: tradeSlot,
+							id: otherPlayer.id,
+							rid: otherPlayerTradeSlot.rid,
+						});
+						log("Joined giveaway!");
+					}
+				}
+			});
+		}
+	}
 }
 
 // Sell to player buy orders that are better than 60% (the npc markdown)
@@ -523,7 +570,8 @@ function merchantStateTasks(state) {
         }
         // Deposit
         case 2: {
-            depositGold();
+            depositGold(Number.MAX_SAFE_INTEGER);
+            withdrawGold(spendingAmount);
             depositItems();
             return true;
         }

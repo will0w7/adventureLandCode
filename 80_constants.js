@@ -40,7 +40,7 @@ let filterWord = ['gold', 'killed', 'speed'];
 let targetPotionAmount = 1000;
 
 // Merchant stuff
-let spendingAmount = 10000000;
+let spendingAmount = 100000000;
 // Target for upgrades
 let normalLevelTarget = 8;
 let highLevelTarget = 8;

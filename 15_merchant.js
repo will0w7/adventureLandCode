@@ -655,14 +655,48 @@ function merchantStateController(state) {
 }
 
 // Luck loop
-setInterval(function () {
+/*setInterval(function () {
     if (Math.random() > 0.75) return;
     let entity = parent.entities[random_one(Object.keys(parent.entities))];
     if (is_character(entity)) {
         use('mluck', entity, true);
         game_log('LUCKED - ' + entity.name);
     }
-}, 2500);
+}, 2500); */
+
+setInterval(merchantsLuck, 1000);
+
+//Buff other characters with Merchants Luck!
+function merchantsLuck() {
+	let otherPlayers = [];
+	for (i in parent.entities) {
+		if (parent.entities[i].player
+			&& parent.entities[i].ctype
+			&& !parent.entities[i].rip
+			&& !parent.entities[i].npc
+			&& (!parent.entities[i].s.mluck
+				|| parent.entities[i].s.mluck.strong === false)
+			/*
+			&& (!parent.entities[i].s.mluck
+			 || !parent.entities[i].s.mluck.f
+			 || parent.entities[i].s.mluck.f != character.name)
+			*/
+			&& character.mp > (character.max_mp / 10)
+			&& character.mp > G.skills.mluck.mp
+			&& distance(character, parent.entities[i]) < G.skills.mluck.range
+			&& is_in_range(parent.entities[i], "mluck")
+			&& !is_on_cooldown("mluck")) {
+			//All eligible players get pushed to the array...
+			otherPlayers.push(parent.entities[i]);
+		}
+	}
+	//...and then one random player is picked!
+	if (otherPlayers.length > 0 && character.level >= 40) {
+		const luckyPlayer = Math.floor(Math.random() * otherPlayers.length)
+		use_skill("mluck", otherPlayers[luckyPlayer].name);
+		// log(`Giving luck to: ${otherPlayers[luckyPlayer].name}`);
+	}
+}
 
 // Price Check Loop
 cachePriceInfo();

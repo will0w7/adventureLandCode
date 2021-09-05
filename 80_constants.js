@@ -15,7 +15,7 @@ let pvpMode = false;
 let buyThesePotions = ["hpot1", "mpot1"];
 
 // Avoid attacking these
-let avoidMtypes = ['booboo', 'dknight2', 'boar', 'scorpion', 'mechagnome', "frog"];
+let avoidMtypes = ['booboo', 'dknight2', 'mechagnome', "frog", "boar"];
 // Avoid going here
 let avoidMaps = ["tunnel"];
 // Event targets
@@ -42,8 +42,8 @@ let targetPotionAmount = 1000;
 // Merchant stuff
 let spendingAmount = 30000000;
 // Target for upgrades
-let normalLevelTarget = 8;
-let highLevelTarget = 8;
+let normalLevelTarget = 7;
+let highLevelTarget = 7;
 let epicLevelTarget = 5;
 
 // The merchant will attempt to combine these to the target level

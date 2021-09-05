@@ -40,8 +40,9 @@ function merchantTaskManager() {
         combineItems();
     } else {
         if (!getItem && !craftingItem && !exchangeTarget && !currentTask) if (character.map === 'bank') return shibMove('main'); else if (!distanceToPoint(69, 12) || distanceToPoint(69, 12) > 15) return shibMove(69, 12);
-        if (!sellItemsToPlayers() && buyFromPlayers() && !buyFromPonty()) {
+        if (!sellItemsToPlayers() && buyFromPlayers()) { //  && !buyFromPonty()
             // buyBaseItems();
+            snipePonty();
             buyCheapStuff();
             passiveMerchant();
         }
@@ -177,6 +178,16 @@ function passiveMerchant() {
             game_log(G.items[item.item].name + ' wishlisted for ' + G.items[item.item].g);
         }
     }
+}
+
+//Snipe Ponty for wanted items
+function snipePonty() {
+    if (character.map === 'bank') return shibMove('main');
+    parent.socket.emit("secondhands");
+	parent.secondhands.forEach(item => {
+		if (snipePonty.includes(item.name)
+			&& character.gold >= parent.calculate_item_value(item) * 2 * (item.q ?? 1)) parent.socket.emit("sbuy", { "rid": item.rid });
+	});
 }
 
 //Buy items form Ponty

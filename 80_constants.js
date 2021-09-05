@@ -97,13 +97,18 @@ let sellList = ['firecrackers'];
 let snipePonty = [
     // Weapons
     "firestaff", "harbringer", "basher", "fireblade", "cupid", "pmace",
-    "staffofthedead", "swordofthedead", "maceofthedead",
+    "staffofthedead", "swordofthedead", "maceofthedead", "spearofthedead",
+    "fsword", "froststaff", "hammer", "lmace",
     // Jewelry
     "intbelt", "intring", "intearring", "intamulet",
     "strbelt", "strring", "strearring", "stramulet",
     "orbofstr", "orbofint", "orbg", "wbook1",
-    "t2intamulet", "t2stramulet", "handofmidas",
-    "cape", "bcape", "mcape", "fcape", "wcape",
+    "t2intamulet", "t2stramulet", "snring",
+    "handofmidas", "mbelt",
+    "suckerpunch", "vring", "zapper", "ringofluck", "trigger",
+    "dexearringx", "cearring",
+    "cape", "bcape", "fcape", "ecape", "angelwings", "vcape",
+    "jacko", "ftrinket", "talkingskull", "rabbitsfoot",
     // Armors
     "mchat", "mcgloves", "mcpants", "mcarmor", "mcboots",
     "mmhat", "mmgloves", "mmpants", "mmarmor", "mmshoes",

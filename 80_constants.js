@@ -52,8 +52,7 @@ let combineTargets = ['intearring', 'dexearring', 'strearring', 'molesteeth', 's
     'solitaire', 'dexamulet', 'amuletofm', 'tristone', 'xptome', 'stramulet', 'lostearring', 'wbook1', 'wbook0', 'strbelt', 'dexbelt', 'intbelt'];
 
 // The merchant will attempt to upgrade these
-let upgradeTargets = ['xmace', '', '', '', '', '', '', '', '', '', '', '',
-    '', '', '', '', '', '', 'cupid', 'pmace', 'firestaff', 'harbringer', 'basher', 'fireblade', '', ''];
+let upgradeTargets = ['cupid', 'pmace', 'firestaff', 'harbringer', 'basher', 'fireblade'];
 
 // The merchant will attempt to exchange these
 let exchangeItems = [{ item: 'redenvelopev2', npc: 'exchange' }, { item: 'candypop', npc: 'exchange', amount: 10 },
@@ -67,25 +66,24 @@ let exchangeItems = [{ item: 'redenvelopev2', npc: 'exchange' }, { item: 'candyp
 // The merchant will attempt to sell these to NPC
 let trashItems = [
 	"cclaw", "crabclaw", "shoes1", "coat", "spores", "coat1", "pants1",
-	"wshoes", "beewings", "wcap", "", "",
+	"wshoes", "beewings",
 	"wattire", "poison", "rattail", "wbreeches", "gslime",
 	"shoes", "pants", "spear", "sstinger", "smush", "frogt",
 	"gloves", "gloves1", "stinger", "wgloves", "sword",
 	"dstones", "helmet", "helmet1", "bwing", "tshirt0",
-	"tshirt1", "tshirt2", "cshell", "whiteegg", "",
-	"hbow", "shield", "mushroomstaff", "", "",
-	"", "", "hpbelt", "hpamulet",
-	"throwingstars", "smoke", "phelmet", "",
-	"", "dagger", "", "snowball",
-	"iceskates", "",
-	"bcandle", "ijx", "", "slimestaff", "bow", "", "",
+	"tshirt1", "tshirt2", "cshell", "whiteegg",
+	"hbow", "shield", "mushroomstaff",
+	"hpbelt", "hpamulet",
+	"throwingstars", "smoke", "phelmet",
+	"dagger", "snowball",
+	"iceskates",
+	"bcandle", "ijx", "slimestaff", "bow",
 	//XMas Set
 	"xmashat", "mittens", "xmaspants", "xmasshoes", "rednose", "warmscarf", "", "ornamentstaff",
 	//Easter Set
 	"eears", "ecape", "epyjamas", "eslippers", "carrotsword", "pinkie",
 	//Unneeded elixirs
 	"", "", "",
-	"", "", "", "", "", "", "", "",
 	//Literally trash
 	"carrot"];
 
@@ -93,7 +91,7 @@ let trashItems = [
 let noSell = ['stand0', 'stand1', 'cdragon', 'poison', "tracker", "jacko", "monstertoken", "pvptoken", "pickaxe", "rod"];
 
 // Passively sell these
-let sellList = ['', '', '', '', '', '', 'firecrackers'];
+let sellList = ['firecrackers'];
 
 // Ponty snipe
 let snipePonty = [
@@ -105,7 +103,7 @@ let snipePonty = [
     "strbelt", "strring", "strearring", "stramulet",
     "orbofstr", "orbofint", "orbg", "wbook1",
     "t2intamulet", "t2stramulet", "handofmidas",
-    "cape", "bcape", "mcape", "fcape",
+    "cape", "bcape", "mcape", "fcape", "wcape",
     // Armors
     "mchat", "mcgloves", "mcpants", "mcarmor", "mcboots",
     "mmhat", "mmgloves", "mmpants", "mmarmor", "mmshoes",

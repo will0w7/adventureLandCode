@@ -26,6 +26,7 @@ setInterval(function () {
 
 //MERCHANT TASKS
 function merchantTaskManager() {
+    if (!buyCooldown) buyCooldown = Date.now();
     potionController();
     if (!lastBankCheck) return bookKeeping();
     if (isPvP() && nearbyAggressors(600).length) {
@@ -40,7 +41,7 @@ function merchantTaskManager() {
     } else {
         if (!getItem && !craftingItem && !exchangeTarget && !currentTask) if (character.map === 'bank') return shibMove('main'); else if (!distanceToPoint(69, 12) || distanceToPoint(69, 12) > 15) return shibMove(69, 12);
         if (!sellItemsToPlayers() && !buyFromPlayers() && !buyFromPonty()) {
-            buyBaseItems();
+            // buyBaseItems();
             passiveMerchant();
         }
     }

@@ -3,7 +3,7 @@ if (get_active_characters()[character.name] === 'self') load_code(2);
 let lastBankCheck, potionsNeeded, state, lastAttemptedCrafting, craftingItem, currentTask, craftingLevel,
     exchangeTarget,
     exchangeNpc, exchangeAmount, playerSale, saleCooldown, lastRestock, buyCooldown, //deathCooldown,
-     getItem, sellItem;
+    getItem, sellItem;
 //let deathTracker = 0;
 //let deathTime = {};
 let passiveSale = {};
@@ -39,7 +39,7 @@ function merchantTaskManager() {
         combineItems();
     } else {
         if (!getItem && !craftingItem && !exchangeTarget && !currentTask) if (character.map === 'bank') return shibMove('main'); else if (!distanceToPoint(69, 12) || distanceToPoint(69, 12) > 15) return shibMove(69, 12);
-        if (!sellItemsToPlayers() && !buyFromPlayers()) {
+        if (!sellItemsToPlayers() && !buyFromPlayers() && !buyFromPonty()) {
             buyBaseItems();
             passiveMerchant();
         }
@@ -77,10 +77,10 @@ function sellItemsToPlayers() {
                     game_log("To: " + buyers.name);
                     game_log("Price: " + slot.price);
                     pm(buyers.name, 'Enjoy the ' + slot.name + ' ~This is an automated message~');
-                    parent.socket.emit("trade_sell", {slot: 'trade' + s, id: buyers.id, rid: slot.rid, q: 1});
+                    parent.socket.emit("trade_sell", { slot: 'trade' + s, id: buyers.id, rid: slot.rid, q: 1 });
                 } else {
                     game_log("Grabbing to sell - " + slot.name);
-                    playerSale = {item: slot.name, level: slot.level, rid: slot.rid};
+                    playerSale = { item: slot.name, level: slot.level, rid: slot.rid };
                     currentTask = 'getItem';
                     withdrawItem(slot.name, slot.level)
                 }
@@ -177,6 +177,52 @@ function passiveMerchant() {
     }
 }
 
+//Buy items form Ponty
+function buyFromPonty() {
+    let bankDetails = JSON.parse(localStorage.getItem('bankDetails'));
+    if (bankDetails['gold'] + character.gold < 5000000) return;
+    if (character.map === 'bank') return shibMove('main');
+    //Open Ponty UI to refresh data
+    parent.socket.emit("secondhands");
+    let items = parent.secondhands;
+    if (buyCooldown + 1000 > Date.now()) return false;
+    for (let s = 0; s < items.length; s++) {
+        let item = items[s];
+        if (item) {
+            // Buy from the passive list
+            for (let it of buyTargets) {
+                if (it.item !== item.name) continue;
+                // If we have the item continue
+                if (bankDetails[it.item] >= it.amount || getInventorySlot(it.item)) continue;
+                parent.socket.emit("sbuy", { "rid": item.rid });
+                set_message('BuyingPonty');
+                buyCooldown = Date.now();
+                game_log("Item Bought: " + it.name);
+                game_log("From: Ponty");
+                game_log("Price: " + item.price);
+                return true;
+            }
+            // Buy from the combine/upgrade lists when needed
+            let craftingNeeds = combineTargets.concat(upgradeTargets);
+            for (let it of craftingNeeds) {
+                if (it !== item.name) continue;
+                // If we have enough of the item continue
+                let needed = 2;
+                if (G.items[it].compound) needed = 4;
+                if (totalInBank(it) >= needed) continue;
+                parent.socket.emit("sbuy", { "rid": item.rid });
+                set_message('BuyingPonty');
+                buyCooldown = Date.now();
+                game_log("Item Bought: " + item.name);
+                game_log("From: Ponty");
+                game_log("Price: " + item.price);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 // Sell to player buy orders that are better than 60% (the npc markdown)
 function buyFromPlayers() {
     let bankDetails = JSON.parse(localStorage.getItem('bankDetails'));
@@ -269,10 +315,8 @@ function exchangeStuff() {
 function buyBaseItems() {
     if (lastRestock + 60000 * 60 > Date.now()) return;
     let baseItems = ['bow', 'helmet', 'shoes', 'gloves', 'pants', 'coat', 'blade', 'claw', 'staff', 'wshield'];
-    let bought;
     for (let item of baseItems) {
         if (totalInBank(item) < 4) {
-            bought = true;
             set_message('Restocking');
             game_log('RESTOCK: Bought a ' + item + ' as we only had ' + totalInBank(item) + ' of them.');
             buy(item, 1);
@@ -424,7 +468,7 @@ function standCheck() {
         let standsMerchant = getNpc("standmerchant");
         let distanceToMerchant = null;
         if (standsMerchant != null) distanceToMerchant = distanceToPoint(standsMerchant.position[0], standsMerchant.position[1]);
-        if (!smart.moving && (distanceToMerchant == null || distanceToMerchant > 150 || character.map !== 'main')) return smart_move({to: "stands"});
+        if (!smart.moving && (distanceToMerchant == null || distanceToMerchant > 150 || character.map !== 'main')) return smart_move({ to: "stands" });
         if (distanceToMerchant != null && distanceToMerchant < 155) {
             buy('stand0', 1);
         }
@@ -471,7 +515,7 @@ function crafting(task, componentSlot, scrollSlot) {
         let upgradeMerchant = getNpc("newupgrade");
         let distanceToMerchant = null;
         if (upgradeMerchant != null) distanceToMerchant = distanceToPoint(upgradeMerchant.position[0], upgradeMerchant.position[1]);
-        if (!smart.moving && (distanceToMerchant == null || distanceToMerchant > 350 || character.map !== 'main')) return smart_move({to: "upgrade"});
+        if (!smart.moving && (distanceToMerchant == null || distanceToMerchant > 350 || character.map !== 'main')) return smart_move({ to: "upgrade" });
         if (distanceToMerchant != null && distanceToMerchant < 355) {
             if (currentTask === 'combine') compound(componentSlot[0], componentSlot[1], componentSlot[2], scrollSlot); else upgrade(componentSlot[0], scrollSlot);
             return true;
@@ -636,8 +680,8 @@ setInterval(function () {
     updateCharacterData();
 }, 5000);
 
-let realms = [{region: 'EU', name: 'I'}, {region: 'EU', name: 'II'}, {region: 'EU', name: 'PVP'},
-    {region: 'US', name: 'I'}, {region: 'US', name: 'II'}, {region: 'US', name: 'III'}, {region: 'US', name: 'PVP'}];
+let realms = [{ region: 'EU', name: 'I' }, { region: 'EU', name: 'II' }, { region: 'EU', name: 'PVP' },
+{ region: 'US', name: 'I' }, { region: 'US', name: 'II' }, { region: 'US', name: 'III' }, { region: 'US', name: 'PVP' }];
 let currentRealm = parseInt(localStorage.getItem('realmSwapCount')) || 0;
 
 //Realm switching

@@ -36,8 +36,9 @@ function merchantTaskManager() {
     if (standCheck()) return;
     if (exchangeStuff()) return;
     if (sellExcessToNPC()) return;
-    if (craftingItem || !lastAttemptedCrafting || lastAttemptedCrafting + (60000 * 15) < Date.now()) {
+    if (craftingItem || !lastAttemptedCrafting || lastAttemptedCrafting + (60000 * 10) < Date.now()) {
         combineItems();
+        depositItems();
     } else {
         if (!getItem && !craftingItem && !exchangeTarget && !currentTask) if (character.map === 'bank') return shibMove('main'); else if (!distanceToPoint(69, 12) || distanceToPoint(69, 12) > 15) return shibMove(69, 12);
         if (!sellItemsToPlayers() && buyFromPlayers()) { //  && !buyFromPonty()
@@ -184,10 +185,10 @@ function passiveMerchant() {
 function snipePonty() {
     if (character.map === 'bank') return shibMove('main');
     parent.socket.emit("secondhands");
-	parent.secondhands.forEach(item => {
-		if (wantedItems.includes(item.name)
-			&& character.gold >= parent.calculate_item_value(item) * 2 * (item.q ?? 1)) parent.socket.emit("sbuy", { "rid": item.rid });
-	});
+    parent.secondhands.forEach(item => {
+        if (wantedItems.includes(item.name)
+            && character.gold >= parent.calculate_item_value(item) * 2 * (item.q ?? 1)) parent.socket.emit("sbuy", { "rid": item.rid });
+    });
 }
 
 //Buy items form Ponty
@@ -218,49 +219,49 @@ function buyFromPonty() {
 }
 
 function buyCheapStuff() {
-	for (const i in parent.entities) {
-		const otherPlayer = parent.entities[i];
-		if (otherPlayer.player
-			&& otherPlayer.ctype === "merchant"
-			&& otherPlayer.slots
-			//&& distance(character, otherPlayer) < G.skills.mluck.range
-			) {
+    for (const i in parent.entities) {
+        const otherPlayer = parent.entities[i];
+        if (otherPlayer.player
+            && otherPlayer.ctype === "merchant"
+            && otherPlayer.slots
+            //&& distance(character, otherPlayer) < G.skills.mluck.range
+        ) {
 
-			const tradeSlots = Object.keys(otherPlayer.slots).filter(tradeSlot => tradeSlot.includes("trade"));
-			tradeSlots.forEach(tradeSlot => {
-				const otherPlayerTradeSlot = otherPlayer.slots[tradeSlot];
-				//Must be a Trade-Slot
-				if (otherPlayerTradeSlot) {
-					if (!otherPlayerTradeSlot.b //Excludes "whishlisted" items! Trade slots can "sell" or "wishlist"!
-						&& otherPlayerTradeSlot.price < item_value(otherPlayerTradeSlot)
-						&& character.gold > otherPlayerTradeSlot.price
-						//Don't try to buy Giveaways
-						&& !otherPlayerTradeSlot.giveaway) {
-						//If it's a single item, buy it.
-						if (!otherPlayerTradeSlot.q) {
-							game_log(`Bought 1 ${otherPlayerTradeSlot.name} from ${otherPlayer.name}`);
-							trade_buy(otherPlayer, tradeSlot, 1);
-							//If the item has a quantity, buy as many as possible
-						} else if (otherPlayerTradeSlot.q) {
-							//Maximum possible quantity of items that can be bought wit available gold
-							let maxBuy = Math.floor(character.gold / otherPlayerTradeSlot.price) < otherPlayerTradeSlot.q ? Math.floor(character.gold / otherPlayerTradeSlot.price) : otherPlayerTradeSlot.q;
-							trade_buy(otherPlayer, tradeSlot, maxBuy);
-							//parent.trade_buy(tradeSlot, otherPlayer.name, otherPlayerTradeSlot.rid, maxBuy);
-						}
-						//Auto-Join Giveaways
-					} else if (otherPlayerTradeSlot.giveaway
-						&& !otherPlayerTradeSlot.list.includes(character.name)) {
-						parent.socket.emit('join_giveaway', {
-							slot: tradeSlot,
-							id: otherPlayer.id,
-							rid: otherPlayerTradeSlot.rid,
-						});
-						log("Joined giveaway!");
-					}
-				}
-			});
-		}
-	}
+            const tradeSlots = Object.keys(otherPlayer.slots).filter(tradeSlot => tradeSlot.includes("trade"));
+            tradeSlots.forEach(tradeSlot => {
+                const otherPlayerTradeSlot = otherPlayer.slots[tradeSlot];
+                //Must be a Trade-Slot
+                if (otherPlayerTradeSlot) {
+                    if (!otherPlayerTradeSlot.b //Excludes "whishlisted" items! Trade slots can "sell" or "wishlist"!
+                        && otherPlayerTradeSlot.price < item_value(otherPlayerTradeSlot)
+                        && character.gold > otherPlayerTradeSlot.price
+                        //Don't try to buy Giveaways
+                        && !otherPlayerTradeSlot.giveaway) {
+                        //If it's a single item, buy it.
+                        if (!otherPlayerTradeSlot.q) {
+                            game_log(`Bought 1 ${otherPlayerTradeSlot.name} from ${otherPlayer.name}`);
+                            trade_buy(otherPlayer, tradeSlot, 1);
+                            //If the item has a quantity, buy as many as possible
+                        } else if (otherPlayerTradeSlot.q) {
+                            //Maximum possible quantity of items that can be bought wit available gold
+                            let maxBuy = Math.floor(character.gold / otherPlayerTradeSlot.price) < otherPlayerTradeSlot.q ? Math.floor(character.gold / otherPlayerTradeSlot.price) : otherPlayerTradeSlot.q;
+                            trade_buy(otherPlayer, tradeSlot, maxBuy);
+                            //parent.trade_buy(tradeSlot, otherPlayer.name, otherPlayerTradeSlot.rid, maxBuy);
+                        }
+                        //Auto-Join Giveaways
+                    } else if (otherPlayerTradeSlot.giveaway
+                        && !otherPlayerTradeSlot.list.includes(character.name)) {
+                        parent.socket.emit('join_giveaway', {
+                            slot: tradeSlot,
+                            id: otherPlayer.id,
+                            rid: otherPlayerTradeSlot.rid,
+                        });
+                        log("Joined giveaway!");
+                    }
+                }
+            });
+        }
+    }
 }
 
 // Sell to player buy orders that are better than 60% (the npc markdown)
@@ -502,6 +503,22 @@ function combineItems() {
     }
 }
 
+//Mass Production
+function massProduction() {
+    if (merchantDebugMode) log("Using Mass Production Skill", "green");
+    if (character.level >= 60
+        && character.mp > G.skills.massproductionpp.mp
+        && !is_on_cooldown("massproductionpp")) {
+        use_skill("massproductionpp");
+        game_log("Used Mass Production 90%");
+    } else if (character.level >= 30
+        && character.mp > G.skills.massproduction.mp
+        && !is_on_cooldown("massproduction")) {
+        use_skill("massproduction");
+        game_log("Used Mass Production 50%");
+    }
+}
+
 // Go buy a stand
 function standCheck() {
     if (!getInventorySlot('stand0') && !localStorage.getItem('bankDetails')['stand0']) {
@@ -557,6 +574,7 @@ function crafting(task, componentSlot, scrollSlot) {
         if (upgradeMerchant != null) distanceToMerchant = distanceToPoint(upgradeMerchant.position[0], upgradeMerchant.position[1]);
         if (!smart.moving && (distanceToMerchant == null || distanceToMerchant > 350 || character.map !== 'main')) return smart_move({ to: "upgrade" });
         if (distanceToMerchant != null && distanceToMerchant < 355) {
+            massProduction();
             if (currentTask === 'combine') compound(componentSlot[0], componentSlot[1], componentSlot[2], scrollSlot); else upgrade(componentSlot[0], scrollSlot);
             return true;
         }

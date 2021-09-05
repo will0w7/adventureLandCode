@@ -46,7 +46,9 @@ function updateCode() {
                             slot: codeObject.slot,
                             code: request.responseText
                         };
-                        parent.api_call("save_code", data);
+                        setTimeout(function(){
+                            parent.api_call("save_code", data);
+                        }, 2000);
                     }
                 };
                 request.send();

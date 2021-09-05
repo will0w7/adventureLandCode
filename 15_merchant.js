@@ -22,7 +22,7 @@ setInterval(function () {
     if (character.rip) state = 99;
     if (!state) return;
     if (!merchantStateTasks(state)) merchantTaskManager();
-}, 300);
+}, 800);
 
 //MERCHANT TASKS
 function merchantTaskManager() {

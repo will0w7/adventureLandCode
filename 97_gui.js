@@ -11,4 +11,4 @@ add_top_button(3, 'Dev', function () {
 // Clear Drawings
 setInterval(function () {
     clear_drawings();
-}, 300);
+}, 800);

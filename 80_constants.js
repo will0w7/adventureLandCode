@@ -30,7 +30,7 @@ let classInventory = {
     'ranger': ["tracker", 'poison', "jacko"], //'poison', 'cupid'
     'priest': ["tracker"],
     'mage': ["tracker"],
-    'merchant': ["tracker", "rod", "pickaxe"]
+    'merchant': ["tracker", "rod", "pickaxe", "scroll0", "scroll1", "cscroll0", "cscroll1"]
 };
 
 // Filter words from log
@@ -79,7 +79,7 @@ let trashItems = [
 	"iceskates",
 	"bcandle", "ijx", "slimestaff", "bow",
 	//XMas Set
-	"xmashat", "mittens", "xmaspants", "xmasshoes", "rednose", "warmscarf", "", "ornamentstaff",
+	"xmashat", "mittens", "xmaspants", "xmasshoes", "rednose", "warmscarf", "xmace", "ornamentstaff",
 	//Easter Set
 	"eears", "ecape", "epyjamas", "eslippers", "carrotsword", "pinkie",
 	//Unneeded elixirs
@@ -116,7 +116,7 @@ let snipePonty = [
 ];
 
 // Passively buy these
-let buyTargets = [{ item: 'poison', amount: 20 }, { item: 'armorbox', amount: 1 }, { item: 'weaponbox', amount: 1 }];
+let buyTargets = [{ item: 'poison', amount: 80 }, { item: 'armorbox', amount: 10 }, { item: 'weaponbox', amount: 10 }];
 
 //GEARSCORE
 // These items are not equipped

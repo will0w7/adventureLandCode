@@ -38,7 +38,6 @@ function merchantTaskManager() {
     if (sellExcessToNPC()) return;
     if (craftingItem || !lastAttemptedCrafting || lastAttemptedCrafting + (60000 * 10) < Date.now()) {
         combineItems();
-        depositItems();
     } else {
         if (!getItem && !craftingItem && !exchangeTarget && !currentTask) if (character.map === 'bank') return shibMove('main'); else if (!distanceToPoint(69, 12) || distanceToPoint(69, 12) > 15) return shibMove(69, 12);
         if (!sellItemsToPlayers() && buyFromPlayers()) { //  && !buyFromPonty()
@@ -505,7 +504,6 @@ function combineItems() {
 
 //Mass Production
 function massProduction() {
-    if (merchantDebugMode) log("Using Mass Production Skill", "green");
     if (character.level >= 60
         && character.mp > G.skills.massproductionpp.mp
         && !is_on_cooldown("massproductionpp")) {

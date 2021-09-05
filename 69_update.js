@@ -49,7 +49,9 @@ function updateCode() {
                         parent.api_call("save_code", data);
                     }
                 };
-                setTimeout(request.send(), 1000);
+                setTimeout(function(){
+                    request.send();
+                }, 10000);
             }
         }
     });

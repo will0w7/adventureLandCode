@@ -35,21 +35,23 @@ function updateCode() {
     parent.api_call("list_codes", {
         callback: function () {
             game_log("Updating from GitHub...");
-            for (let file of allFiles) {
-                let request = new XMLHttpRequest();
-                request.open("GET", baseURL + file);
-                request.onreadystatechange = function () {
-                    if (request.readyState === 4 && request.status === 200) {
-                        let codeObject = getCodeObject(file);
-                        let data = {
-                            name: codeObject.name,
-                            slot: codeObject.slot,
-                            code: request.responseText
-                        };
-                        parent.api_call("save_code", data);
-                    }
-                };
-                request.send();
+            for (let i = 1; i < allFiles.length; i++) {
+                setTimeout(function loop() {
+                    let request = new XMLHttpRequest();
+                    request.open("GET", baseURL + file);
+                    request.onreadystatechange = function () {
+                        if (request.readyState === 4 && request.status === 200) {
+                            let codeObject = getCodeObject(file);
+                            let data = {
+                                name: codeObject.name,
+                                slot: codeObject.slot,
+                                code: request.responseText
+                            };
+                            parent.api_call("save_code", data);
+                        }
+                    };
+                    request.send();
+                }, i * 3000);
             }
         }
     });

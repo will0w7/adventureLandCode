@@ -67,7 +67,7 @@ let exchangeItems = [{ item: 'redenvelopev2', npc: 'exchange' }, { item: 'candyp
 // The merchant will attempt to sell these to NPC
 let trashItems = [
 	"cclaw", "crabclaw", "shoes1", "coat", "spores", "coat1", "pants1",
-	"wshoes", "beewings", "wcap", "strearring", "stramulet",
+	"wshoes", "beewings", "wcap", "", "",
 	"wattire", "poison", "rattail", "wbreeches", "gslime",
 	"shoes", "pants", "spear", "sstinger", "smush", "frogt",
 	"gloves", "gloves1", "stinger", "wgloves", "sword",

@@ -471,7 +471,7 @@ function combineItems() {
                     lastAttemptedCrafting = undefined;
                 }
             } else {
-                if (bankDetails[scroll + '0']) {
+                if (bankDetails[scroll]) {
                     withdrawItem(scroll);
                 } else {
                     buyScroll(scroll);

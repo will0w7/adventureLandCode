@@ -71,7 +71,7 @@ let trashItems = ['hpbelt', 'hpamulet', 'vitscroll', 'vitearring'];
 let noSell = ['stand0', 'stand1', 'cdragon', 'poison', "tracker", "jacko", "monstertoken", "pvptoken", "pickaxe", "rod"];
 
 // Passively sell these
-let sellList = ['intearring', 'dexearring', 'strearring', 'intamulet', 'dexamulet', 'intamulet', 'firecrackers'];
+let sellList = ['', '', '', '', '', '', 'firecrackers'];
 
 // Passively buy these
 let buyTargets = [{item: 'poison', amount: 20}, {item: 'armorbox', amount: 1}, {item: 'weaponbox', amount: 1}];

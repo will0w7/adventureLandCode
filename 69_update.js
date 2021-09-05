@@ -38,10 +38,10 @@ function updateCode() {
             for (let i = 1; i < allFiles.length; i++) {
                 setTimeout(function loop() {
                     let request = new XMLHttpRequest();
-                    request.open("GET", baseURL + file);
+                    request.open("GET", baseURL + allFiles[i - 1]);
                     request.onreadystatechange = function () {
                         if (request.readyState === 4 && request.status === 200) {
-                            let codeObject = getCodeObject(file);
+                            let codeObject = getCodeObject(allFiles[i - 1]);
                             let data = {
                                 name: codeObject.name,
                                 slot: codeObject.slot,

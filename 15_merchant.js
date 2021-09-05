@@ -185,7 +185,7 @@ function snipePonty() {
     if (character.map === 'bank') return shibMove('main');
     parent.socket.emit("secondhands");
 	parent.secondhands.forEach(item => {
-		if (snipePonty.includes(item.name)
+		if (wantedItems.includes(item.name)
 			&& character.gold >= parent.calculate_item_value(item) * 2 * (item.q ?? 1)) parent.socket.emit("sbuy", { "rid": item.rid });
 	});
 }
@@ -202,7 +202,7 @@ function buyFromPonty() {
     for (let s = 0; s < items.length; s++) {
         let item = items[s];
         if (item) {
-            for (let it of snipePonty) {
+            for (let it of wantedItems) {
                 if (it !== item.name) continue;
                 parent.socket.emit("sbuy", { "rid": item.rid });
                 set_message('BuyingPonty');

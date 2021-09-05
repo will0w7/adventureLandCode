@@ -94,7 +94,7 @@ let noSell = ['stand0', 'stand1', 'cdragon', 'poison', "tracker", "jacko", "mons
 let sellList = ['firecrackers'];
 
 // Ponty snipe
-let snipePonty = [
+let wantedItems = [
     // Weapons
     "firestaff", "harbringer", "basher", "fireblade", "cupid", "pmace",
     "staffofthedead", "swordofthedead", "maceofthedead", "spearofthedead",

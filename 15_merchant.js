@@ -190,20 +190,6 @@ function buyFromPonty() {
     for (let s = 0; s < items.length; s++) {
         let item = items[s];
         if (item) {
-            // Buy from the passive list
-            for (let it of buyTargets) {
-                if (it.item !== item.name) continue;
-                // If we have the item continue
-                if (bankDetails[it.item] >= it.amount || getInventorySlot(it.item)) continue;
-                parent.socket.emit("sbuy", { "rid": item.rid });
-                set_message('BuyingPonty');
-                buyCooldown = Date.now();
-                game_log("Item Bought: " + it.name);
-                game_log("From: Ponty");
-                game_log("Price: " + item.price);
-                return true;
-            }
-            // Buy from sniped items
             for (let it of snipePonty) {
                 if (it !== item.name) continue;
                 parent.socket.emit("sbuy", { "rid": item.rid });

@@ -40,7 +40,7 @@ let filterWord = ['gold', 'killed', 'speed'];
 let targetPotionAmount = 1000;
 
 // Merchant stuff
-let spendingAmount = 100000000;
+let spendingAmount = 10000000;
 // Target for upgrades
 let normalLevelTarget = 8;
 let highLevelTarget = 8;
@@ -103,13 +103,18 @@ let snipePonty = [
     // Jewelry
     "intbelt", "intring", "intearring", "intamulet",
     "strbelt", "strring", "strearring", "stramulet",
-    "orbofdex", "orbofint", "orbg",
+    "orbofstr", "orbofint", "orbg", "wbook1",
+    "t2intamulet", "t2stramulet", "handofmidas",
+    "cape", "bcape", "mcape", "fcape",
     // Armors
     "mchat", "mcgloves", "mcpants", "mcarmor", "mcboots",
     "mmhat", "mmgloves", "mmpants", "mmarmor", "mmshoes",
     "mphat", "mpgloves", "mppants", "mparmor", "mpshoes",
     "mphat", "mpgloves", "mppants", "mparmor", "mpshoes",
     "mrnhat", "mrngloves", "mrnpants", "mrnarmor", "mrnboots",
+    // Other
+    "poison", "armorbox", "weaponbox", "offering", "monstertoken",
+    "pvptoken", "funtoken", "lostearring", "goldring"
 ];
 
 // Passively buy these

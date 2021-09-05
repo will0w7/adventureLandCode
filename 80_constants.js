@@ -1,12 +1,12 @@
 let pveCharacters = [
-    {'name': 'Shibtank', 'class': 'warrior', 'slot': 12, 'role': 'tank'},
-    {'name': 'Shibdib', 'class': 'mage', 'slot': 13, 'role': 'dps'},
-    {'name': 'Shibheal', 'class': 'priest', 'slot': 10, 'role': 'healer'},
-    {'name': 'Shibgank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
-    {'name': 'Shibdank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
-    {'name': 'Shibfrank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
-    {'name': 'Shibtard', 'class': 'ranger', 'slot': 11, 'role': 'dps'},
-    {'name': 'Shibmerch', 'class': 'merchant', 'slot': 15, 'role': 'merchant'}
+    {'name': 'Nasca', 'class': 'warrior', 'slot': 12, 'role': 'tank'},
+    {'name': 'Nostor', 'class': 'mage', 'slot': 13, 'role': 'dps'},
+    {'name': 'ElQueCura', 'class': 'priest', 'slot': 10, 'role': 'healer'},
+    //{'name': 'Shibgank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
+    //{'name': 'Shibdank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
+    //{'name': 'Shibfrank', 'class': 'rogue', 'slot': 14, 'role': 'dps'},
+    //{'name': 'Nullable', 'class': 'ranger', 'slot': 11, 'role': 'dps'},
+    {'name': 'ElDelBar', 'class': 'merchant', 'slot': 15, 'role': 'merchant'}
 ];
 
 let pvpMode = false;
@@ -25,22 +25,22 @@ let lootTargets = ['tortoise', 'poisio', 'armadillo', 'mvampire', 'phoenix'];
 
 // Items to have in the inventories of each class
 let classInventory = {
-    'warrior': ['basher'],
-    'rogue': ['poison'],
-    'ranger': ['poison', 'cupid'],
-    'priest': [],
-    'mage': [],
-    'merchant': []
+    'warrior': ["tracker", 'basher'],
+    'rogue': ["tracker", 'poison'],
+    'ranger': ["tracker", 'poison', "jacko"], //'poison', 'cupid'
+    'priest': ["tracker"],
+    'mage': ["tracker"],
+    'merchant': ["tracker", "rod", "pickaxe"]
 };
 
 // Filter words from log
 let filterWord = ['gold', 'killed', 'speed'];
 
 // Potion count
-let targetPotionAmount = 500;
+let targetPotionAmount = 1000;
 
 // Merchant stuff
-let spendingAmount = 10000000;
+let spendingAmount = 100000000;
 // Target for upgrades
 let normalLevelTarget = 8;
 let highLevelTarget = 8;
@@ -68,7 +68,7 @@ let exchangeItems = [{item: 'redenvelopev2', npc: 'exchange'}, {item: 'candypop'
 let trashItems = ['hpbelt', 'hpamulet', 'vitscroll', 'vitearring'];
 
 // Don't sell these
-let noSell = ['stand0', 'stand1', 'cdragon', 'poison'];
+let noSell = ['stand0', 'stand1', 'cdragon', 'poison', "tracker", "jacko", "monstertoken", "pvptoken", "pickaxe", "rod"];
 
 // Passively sell these
 let sellList = ['intearring', 'dexearring', 'strearring', 'intamulet', 'dexamulet', 'intamulet', 'firecrackers'];

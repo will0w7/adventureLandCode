@@ -2,9 +2,10 @@ game_log("---Merchant Script Start---");
 if (get_active_characters()[character.name] === 'self') load_code(2);
 let lastBankCheck, potionsNeeded, state, lastAttemptedCrafting, craftingItem, currentTask, craftingLevel,
     exchangeTarget,
-    exchangeNpc, exchangeAmount, playerSale, saleCooldown, lastRestock, buyCooldown, deathCooldown, getItem, sellItem;
-let deathTracker = 0;
-let deathTime = {};
+    exchangeNpc, exchangeAmount, playerSale, saleCooldown, lastRestock, buyCooldown, //deathCooldown,
+     getItem, sellItem;
+//let deathTracker = 0;
+//let deathTime = {};
 let passiveSale = {};
 let sellItems = [];
 

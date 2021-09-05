@@ -132,6 +132,7 @@ function totalInBank(name) {
 function bankTracking() {
     if (character.map !== 'bank') return;
     let bankDetails = {};
+    if (typeof character.user === 'undefined') return;
     for (let key in Object.values(character.user)) {
         let slot = Object.values(character.user)[key];
         if (!slot || !slot.length) continue;

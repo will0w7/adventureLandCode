@@ -85,6 +85,9 @@ function refreshCharacters(pvp, force = false) {
             //Tank
             let tank = shuffle(pveCharacters.filter((c) => c.role === 'tank'))[0];
             if (!Object.keys(get_active_characters()).includes(tank.name)) start_character(tank.name, tank.slot); else load_code(tank.slot);
+            //Merchant
+            //let merchant = shuffle(pveCharacters.filter((c) => c.role === 'merchant'))[0];
+            //if (!Object.keys(get_active_characters()).includes(merchant.name)) start_character(merchant.name, merchant.slot); else load_code(merchant.slot);
         } else {
             let rogues = pveCharacters.filter((c) => c.class === 'rogue');
             for (let rogue of rogues) {

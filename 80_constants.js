@@ -15,7 +15,7 @@ let pvpMode = false;
 let buyThesePotions = ["hpot1", "mpot1"];
 
 // Avoid attacking these
-let avoidMtypes = ['booboo', 'dknight2', 'mechagnome', "frog", "boar", "scorpion", "a5", "wolfie", "ghost", "gredpro"];
+let avoidMtypes = ['booboo', 'dknight2', 'mechagnome', "frog", "boar", "scorpion", "a5", "wolfie", "ghost", "gredpro", "jr"];
 // Avoid going here
 let avoidMaps = ["tunnel"];
 // Event targets

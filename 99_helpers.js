@@ -111,8 +111,10 @@ function partyDPS() {
         let member = parent.party_list[key];
         let entity = getCharacterData()[member] || parent.entities[member];
         if (!entity || entity.ctype === 'merchant') continue;
-        if (entity.ctype === 'priest' || entity.ctype === 'mage') {
+        if (entity.ctype === 'mage') {
             power += entity.attack * entity.frequency * damage_multiplier(-entity.rpiercing || 0) * 0.925;
+        } else if (entity.ctype === 'priest'){
+            power += entity.attack * entity.frequency * damage_multiplier(-entity.rpiercing || 0) * 0.925 * 0.4;
         } else {
             power += entity.attack * entity.frequency * damage_multiplier(-entity.apiercing || 0) * 0.925;
         }

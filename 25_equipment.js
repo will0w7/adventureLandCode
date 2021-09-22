@@ -29,8 +29,8 @@ function gearIssue() {
             bestSetup[character.name].deposit = true;
             return false;
         } else if (!bestSetup[character.name].getBest) {
-            for (let key in Object.values(character.user)) {
-                let slot = Object.values(character.user)[key];
+            for (let key in Object.values(character.id)) {
+                let slot = Object.values(character.id)[key];
                 if (!slot || !slot.length) continue;
                 currentTab:
                     for (let packKey in slot) {
@@ -42,7 +42,7 @@ function gearIssue() {
                             let inventory = bestSetup[character.name]['inventory'] || [];
                             inventory.push({
                                 name: item.name,
-                                bankTab: Object.keys(character.user)[key],
+                                bankTab: Object.keys(character.id)[key],
                                 bankSlot: packKey
                             });
                             bestSetup[character.name]['inventory'] = inventory;
@@ -94,7 +94,7 @@ function gearIssue() {
                                     bestSetup[character.name][itemSlot] = {
                                         name: item.name,
                                         level: item_properties(item).level,
-                                        bankTab: Object.keys(character.user)[key],
+                                        bankTab: Object.keys(character.id)[key],
                                         bankSlot: packKey
                                     };
                                     continue;
@@ -104,7 +104,7 @@ function gearIssue() {
                                     bestSetup[character.name][itemSlot] = {
                                         name: item.name,
                                         level: item_properties(item).level,
-                                        bankTab: Object.keys(character.user)[key],
+                                        bankTab: Object.keys(character.id)[key],
                                         bankSlot: packKey
                                     };
 
@@ -117,7 +117,7 @@ function gearIssue() {
                                     bestSetup[character.name]['mainhand'] = {
                                         name: item.name,
                                         level: item_properties(item).level,
-                                        bankTab: Object.keys(character.user)[key],
+                                        bankTab: Object.keys(character.id)[key],
                                         bankSlot: packKey
                                     };
                                     continue;
@@ -130,7 +130,7 @@ function gearIssue() {
                                     bestSetup[character.name]['mainhand'] = {
                                         name: item.name,
                                         level: item_properties(item).level,
-                                        bankTab: Object.keys(character.user)[key],
+                                        bankTab: Object.keys(character.id)[key],
                                         bankSlot: packKey
                                     };
 
@@ -146,7 +146,7 @@ function gearIssue() {
                                     bestSetup[character.name][slot] = {
                                         name: item.name,
                                         level: item_properties(item).level,
-                                        bankTab: Object.keys(character.user)[key],
+                                        bankTab: Object.keys(character.id)[key],
                                         bankSlot: packKey
                                     };
                                     continue currentTab;
@@ -161,7 +161,7 @@ function gearIssue() {
                                         bestSetup[character.name][slot] = {
                                             name: item.name,
                                             level: item_properties(item).level,
-                                            bankTab: Object.keys(character.user)[key],
+                                            bankTab: Object.keys(character.id)[key],
                                             bankSlot: packKey
                                         };
                                         continue currentTab;

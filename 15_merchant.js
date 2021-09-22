@@ -539,8 +539,8 @@ function bookKeeping() {
         shibMove('bank');
     } else {
         depositItems();
-        for (let key in Object.values(character.user)) {
-            let slot = Object.values(character.user)[key];
+        for (let key in Object.values(character.id)) {
+            let slot = Object.values(character.id)[key];
             if (!slot || !slot.length) continue;
             for (let packKey in slot) {
                 let banker = slot[packKey];
@@ -556,7 +556,7 @@ function bookKeeping() {
                 }
             }
         }
-        bankDetails['gold'] = character.user['gold'];
+        bankDetails['gold'] = character.id['gold'];
         lastBankCheck = Date.now();
         localStorage.removeItem('bankDetails');
         localStorage.setItem('bankDetails', JSON.stringify(bankDetails));

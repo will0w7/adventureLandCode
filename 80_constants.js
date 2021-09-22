@@ -25,7 +25,7 @@ let lootTargets = ['tortoise', 'poisio', 'armadillo', 'mvampire', 'phoenix'];
 
 // Items to have in the inventories of each class
 let classInventory = {
-    'warrior': ["tracker", 'basher'],
+    'warrior': ["tracker", 'basher', "jacko"],
     'rogue': ["tracker", 'poison'],
     'ranger': ["tracker", 'poison', "jacko"], //'poison', 'cupid'
     'priest': ["tracker", "jacko"],

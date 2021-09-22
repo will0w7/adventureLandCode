@@ -17,7 +17,7 @@ function withdrawGold(amount) {
         shibMove('bank');
         return false;
     } else {
-        if (amount > character.user['gold']) amount = character.user['gold'];
+        if (amount > character.id['gold']) amount = character.id['gold'];
         bank_withdraw(amount);
         bankTracking();
     }
@@ -77,15 +77,15 @@ function getItemBankSlot(target, level = undefined) {
         shibMove('bank');
         return false;
     } else {
-        for (let key in Object.values(character.user)) {
-            let slot = Object.values(character.user)[key];
+        for (let key in Object.values(character.id)) {
+            let slot = Object.values(character.id)[key];
             if (!slot || !slot.length) continue;
             for (let packKey in slot) {
                 let item = slot[packKey];
                 if (!item || item === null || item.name !== target) continue;
                 let iLevel = item_properties(item).level;
                 if (level === undefined || iLevel === parseInt(level)) {
-                    return {pack: Object.keys(character.user)[key], slot: packKey};
+                    return {pack: Object.keys(character.id)[key], slot: packKey};
                 }
             }
         }
@@ -103,8 +103,8 @@ function bankItemWithdraw(key, pack) {
 //Get the highest level of a certain item in the bank
 function getHighestLevel(itemName) {
     let best, bestLevel;
-    for (let key in Object.values(character.user)) {
-        let bankTab = Object.values(character.user)[key];
+    for (let key in Object.values(character.id)) {
+        let bankTab = Object.values(character.id)[key];
         if (!bankTab || !bankTab.length) continue;
         for (let itemKey in bankTab) {
             let item = bankTab[itemKey];
@@ -132,9 +132,9 @@ function totalInBank(name) {
 function bankTracking() {
     if (character.map !== 'bank') return;
     let bankDetails = {};
-    if (typeof character.user === 'undefined') return;
-    for (let key in Object.values(character.user)) {
-        let slot = Object.values(character.user)[key];
+    if (typeof character.id === 'undefined') return;
+    for (let key in Object.values(character.id)) {
+        let slot = Object.values(character.id)[key];
         if (!slot || !slot.length) continue;
         for (let packKey in slot) {
             let banker = slot[packKey];
@@ -150,7 +150,7 @@ function bankTracking() {
             }
         }
     }
-    bankDetails['gold'] = character.user['gold'];
+    bankDetails['gold'] = character.id['gold'];
     localStorage.removeItem('bankDetails');
     localStorage.setItem('bankDetails', JSON.stringify(bankDetails));
 }

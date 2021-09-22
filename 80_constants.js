@@ -15,9 +15,9 @@ let pvpMode = false;
 let buyThesePotions = ["hpot1", "mpot1"];
 
 // Avoid attacking these
-let avoidMtypes = ['booboo', 'dknight2', 'mechagnome', "frog", "boar", "scorpion", "a5", "wolfie", "ghost", "gredpro", "jr"];
+let avoidMtypes = ["dknight2", "mechagnome", "frog", "a5", "wolfie", "gredpro", "jr"];
 // Avoid going here
-let avoidMaps = ["tunnel"];
+let avoidMaps = [""];
 // Event targets
 let eventMobs = ['snowman', 'goblin', 'pinkgoo'];
 // Loot targets (These will always be in the array of possibles as they drop something worthwhile.
@@ -28,9 +28,9 @@ let classInventory = {
     'warrior': ["tracker", 'basher'],
     'rogue': ["tracker", 'poison'],
     'ranger': ["tracker", 'poison', "jacko"], //'poison', 'cupid'
-    'priest': ["tracker"],
-    'mage': ["tracker"],
-    'merchant': ["tracker", "rod", "pickaxe", "scroll0", "scroll1", "cscroll0", "cscroll1"]
+    'priest': ["tracker", "jacko"],
+    'mage': ["tracker", "jacko"],
+    'merchant': ["tracker", "jacko", "rod", "pickaxe", "scroll0", "scroll1", "cscroll0", "cscroll1"]
 };
 
 // Filter words from log
@@ -40,7 +40,7 @@ let filterWord = ['gold', 'killed', 'speed'];
 let targetPotionAmount = 1000;
 
 // Merchant stuff
-let spendingAmount = 30000000;
+let spendingAmount = 50000000;
 // Target for upgrades
 let normalLevelTarget = 7;
 let highLevelTarget = 7;
@@ -57,38 +57,33 @@ let upgradeTargets = ['cupid', 'pmace', 'firestaff', 'harbringer', 'basher', 'fi
 // The merchant will attempt to exchange these
 let exchangeItems = [{ item: 'redenvelopev2', npc: 'exchange' }, { item: 'candypop', npc: 'exchange', amount: 10 },
 { item: 'armorbox', npc: 'exchange' }, { item: 'weaponbox', npc: 'exchange' }, { item: 'gem0', npc: 'exchange' },
-{ item: 'seashell', npc: 'fisherman', amount: 20 }, { item: 'candycane', npc: 'exchange' }, {
-    item: 'candycane',
-    npc: 'leathermerchant',
-    amount: 40
-}];
+{ item: 'seashell', npc: 'fisherman', amount: 20 }, { item: 'candycane', npc: 'exchange' }, {item: 'leather', npc: 'leathermerchant', amount: 40},
+{ item: 'gem1', npc: 'exchange' }];
 
 // The merchant will attempt to sell these to NPC
 let trashItems = [
-	"cclaw", "crabclaw", "shoes1", "coat", "spores", "coat1", "pants1",
-	"wshoes", "beewings",
-	"wattire", "poison", "rattail", "wbreeches", "gslime",
-	"shoes", "pants", "spear", "sstinger", "smush", "frogt",
-	"gloves", "gloves1", "stinger", "wgloves", "sword",
-	"dstones", "helmet", "helmet1", "bwing", "tshirt0",
-	"tshirt1", "tshirt2", "cshell", "whiteegg",
-	"hbow", "shield", "mushroomstaff",
-	"hpbelt", "hpamulet",
-	"throwingstars", "smoke", "phelmet",
-	"dagger", "snowball",
-	"iceskates",
-	"bcandle", "ijx", "slimestaff", "bow",
-	//XMas Set
-	"xmashat", "mittens", "xmaspants", "xmasshoes", "rednose", "warmscarf", "xmace", "ornamentstaff",
-	//Easter Set
-	"eears", "ecape", "epyjamas", "eslippers", "carrotsword", "pinkie",
-	//Unneeded elixirs
-	"", "", "",
-	//Literally trash
-	"carrot"];
-
-// Don't sell these
-let noSell = ['stand0', 'stand1', 'cdragon', 'poison', "tracker", "jacko", "monstertoken", "pvptoken", "pickaxe", "rod"];
+    "cclaw", "crabclaw", "shoes1", "coat", "spores", "coat1", "pants1",
+    "wshoes", "beewings", "wcap", //"strearring", "stramulet",
+    "wattire", "rattail", "wbreeches", "gslime", //"poison",
+    "shoes", "pants", "spear", "sstinger", "smush", "frogt",
+    "gloves", "gloves1", "stinger", "wgloves", "sword",
+    "dstones", "helmet", "helmet1", "bwing", "tshirt0",
+    "tshirt1", "tshirt2", "cshell", "whiteegg", "",
+    "hbow", "shield", "mushroomstaff", "swifty", //"stramulet", "strbelt", "strearring",
+    "hpbelt", "hpamulet", "vitring", "vitearring",
+    "throwingstars", "smoke", "phelmet", "wshield",
+    "xmace", "dagger", "bataxe", "snowball", "lspores",
+    "iceskates", "ringsj",
+    "bcandle", "ijx", "claw", "slimestaff", "bow",
+    //XMas Set
+    "xmashat", "mittens", "xmaspants", "xmasshoes", "rednose", "warmscarf", "xmassweater", "candycanesword", "merry", //, "ornamentstaff"
+    //Easter Set
+    "eears", "ecape", "epyjamas", "eslippers", "carrotsword", "pinkie",
+    //Unneeded elixirs
+    //"elixirstr0", "elixirstr1", "elixirstr2",
+    "", "", "", "", "", "", "", "",
+    //Literally trash
+    "carrot"];
 
 // Passively sell these
 let sellList = ['firecrackers'];
@@ -98,17 +93,22 @@ let wantedItems = [
     // Weapons
     "firestaff", "harbringer", "basher", "fireblade", "cupid", "pmace",
     "staffofthedead", "swordofthedead", "maceofthedead", "spearofthedead",
-    "fsword", "froststaff", "hammer", "lmace",
+    "fsword", "froststaff", "hammer", "lmace", "crossbow", "woodensword",
+    "oozingterror",
+    // Offhands
+    "shield", "xshield", "mshield", "lantern",
     // Jewelry
+    "dexbelt", "dexring", "dexearring", "dexamulet",
     "intbelt", "intring", "intearring", "intamulet",
     "strbelt", "strring", "strearring", "stramulet",
-    "orbofstr", "orbofint", "orbg", "wbook1",
+    "orbofstr", "orbofint", "orbofdex", "orbg", "wbook1",
     "t2intamulet", "t2stramulet", "snring",
     "handofmidas", "mbelt",
     "suckerpunch", "vring", "zapper", "ringofluck", "trigger",
-    "dexearringx", "cearring",
+    "dexearringx", "cearring", "cdarktristone", "ctristone",
     "cape", "bcape", "fcape", "ecape", "angelwings", "vcape",
     "jacko", "ftrinket", "talkingskull", "rabbitsfoot",
+    "wbook0", "wbook1", // "ringsj",
     // Armors
     "mchat", "mcgloves", "mcpants", "mcarmor", "mcboots",
     "mmhat", "mmgloves", "mmpants", "mmarmor", "mmshoes",
@@ -117,8 +117,22 @@ let wantedItems = [
     "mrnhat", "mrngloves", "mrnpants", "mrnarmor", "mrnboots",
     // Other
     "poison", "armorbox", "weaponbox", "offering", "monstertoken",
-    "pvptoken", "funtoken", "lostearring", "goldring"
+    "pvptoken", "funtoken", "lostearring", "goldring", "gem0", "gem1",
+    "mbones",
+    // Elixirs
+    "elixirdex0", "elixirdex1", "elixirdex2",
+    "elixirint0", "elixirint1", "elixirint2",
+    //"elixirvit0", "elixirvit1", "elixirvit2",
+    "elixirstr0", "elixirstr1", "elixirstr2",
+    "elixirluck",
+    // Pets
+    "puppyer",
+    // Keys
+    "frozenkey", "cryptkey", "stonekey", "tombkey", "bkey", "ukey", "dkey",
 ];
+
+// Don't sell these
+let noSell = ['stand0', 'stand1', 'cdragon', 'poison', "tracker", "jacko", "monstertoken", "pvptoken", "pickaxe", "rod"].concat(wantedItems);
 
 // Passively buy these
 let buyTargets = [{ item: 'poison', amount: 80 }, { item: 'armorbox', amount: 10 }, { item: 'weaponbox', amount: 10 }];

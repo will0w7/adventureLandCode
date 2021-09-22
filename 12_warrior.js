@@ -23,7 +23,7 @@ setInterval(function () {
         return state = stateController(state);
     }
     if (state && state === 1) farm();
-}, 350);
+}, 100);
 
 //Other Task Loop
 setInterval(function () {
